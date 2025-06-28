@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BinaryCollection<T extends Comparable<T>> {
@@ -34,9 +33,13 @@ public class BinaryCollection<T extends Comparable<T>> {
     }
 
     public List<T> goThroughElementsInOrder() {
-        List<T> result;
+        List<T> result = new ArrayList<>();
         if (this.left == null) {
-            return Collections.singletonList(element);
+            result.add(element);
+            if (this.right != null) {
+                result.addAll(this.right.goThroughElementsInOrder());
+            }
+            return result;
         } else {
             result = new ArrayList<>(this.left.goThroughElementsInOrder());
             result.add(this.element);
