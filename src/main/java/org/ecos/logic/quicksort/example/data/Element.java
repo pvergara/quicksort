@@ -1,3 +1,5 @@
+package org.ecos.logic.quicksort.example.data;
+
 import java.util.Objects;
 
 public class Element implements Comparable<Element> {

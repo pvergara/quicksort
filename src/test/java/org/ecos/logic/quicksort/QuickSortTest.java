@@ -1,3 +1,7 @@
+package org.ecos.logic.quicksort;
+
+import org.ecos.logic.quicksort.example.data.Element;
+import org.ecos.logic.quicksort.exceptions.BinaryCollectionNullPointerException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

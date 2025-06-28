@@ -1,10 +1,14 @@
+package org.ecos.logic.quicksort;
+
+import org.ecos.logic.quicksort.exceptions.BinaryCollectionNullPointerException;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinaryCollection<T extends Comparable<T>> {
+public class BinaryElement<T extends Comparable<T>> {
     T element;
-    BinaryCollection<T> left;
-    BinaryCollection<T> right;
+    BinaryElement<T> left;
+    BinaryElement<T> right;
 
 
     public void addAll(List<T> list) throws BinaryCollectionNullPointerException {
@@ -21,12 +25,12 @@ public class BinaryCollection<T extends Comparable<T>> {
             this.element = element;
         } else if (this.element.compareTo(element) > 0) {
             if (this.left == null) {
-                this.left = new BinaryCollection<>();
+                this.left = new BinaryElement<>();
             }
             this.left.add(element);
         } else {
             if (this.right == null) {
-                this.right = new BinaryCollection<>();
+                this.right = new BinaryElement<>();
             }
             this.right.add(element);
         }
