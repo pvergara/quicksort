@@ -24,6 +24,21 @@ public class QuickSortTest {
     }
 
     @Test
+    void givenTheNumbers_1_1_WhenIAddToQuickSortCollectionAndAskToSortTheSystemReturnsMe_1_1() throws BinaryCollectionNullPointerException {
+        List<Integer> result = new QuickSortCollection<Integer>().addElements(1, 1).sort();
+
+        assertThat(result).contains(1, 1);
+    }
+
+    @Test
+    void givenTheNumbers_2_1_1_2_WhenIAddToQuickSortCollectionAndAskToSortTheSystemReturnsMe_1_1_2_2() throws BinaryCollectionNullPointerException {
+        List<Integer> result = new QuickSortCollection<Integer>().addElements(2, 1, 1, 2).sort();
+
+        assertThat(result).contains(1, 1, 2, 2);
+    }
+
+
+    @Test
     void givenTheNumbers_10_1_WhenIAddToQuickSortCollectionAndAskToSortTheSystemReturnsMe_1_10() throws BinaryCollectionNullPointerException {
         List<Integer> result = new QuickSortCollection<Integer>().addElements(10, 1).sort();
 
@@ -32,9 +47,24 @@ public class QuickSortTest {
 
     @Test
     void givenTheNumbers_10_9_3_4_5_7_6_1_4_2_WhenIAddToQuickSortCollectionAndAskToSortTheSystemReturnsMe_1_2_3_4_4_5_6_7_9_10() throws BinaryCollectionNullPointerException {
-        List<Integer> result = new QuickSortCollection<Integer>().addElements(10, 9, 3, 4, 5, 7, 6, 1, 4, 2).sort();
+        List<Integer> result = new QuickSortCollection<Integer>().addElements(10, 9, 7, 1, 5, 4, 6, 3, 4, 2).sort();
 
-        assertThat(result).contains(1,2,3,4,4,5,6,7,9,10);
+        assertThat(result).contains(1, 2, 3, 4, 4, 5, 6, 7, 9, 10);
+    }
+
+    @Test
+    void givenTheNumbers_10_9_3_4_5_7_6_1_4_2_WhenIAddToQuickSortCollectionAndAskToSortReverseOrderTheSystemReturnsMe_1_2_3_4_4_5_6_7_9_10() throws BinaryCollectionNullPointerException {
+        List<Integer> result = new QuickSortCollection<Integer>().addElements(10, 9, 7, 1, 5, 4, 6, 3, 4, 2).reverseSort();
+
+        assertThat(result).contains(10, 9, 7, 6, 5, 4, 4, 3, 2, 1);
+    }
+
+
+    @Test
+    void givenTheNumbers_1_4_4_4_3_6_5_7_9_10_WhenIAddToQuickSortCollectionAndAskToSortReverseOrderTheSystemReturnsMe_10_9_7_6_5_4_4_3_2_1() throws BinaryCollectionNullPointerException {
+        List<Integer> result = new QuickSortCollection<Integer>().addElements(1, 2, 4, 4, 3, 6, 5, 7, 9, 10).reverseSort();
+
+        assertThat(result).contains(10, 9, 7, 6, 5, 4, 4, 3, 2, 1);
     }
 
     @Test
@@ -42,8 +72,14 @@ public class QuickSortTest {
         Element uncleSam = new Element("Uncle", "Sam", 30);
         Element uncleTom = new Element("Uncle", "Tom", 20);
         Element aunSara = new Element("Aunt", "Ada", 10);
-        List<Element> result = new QuickSortCollection<Element>().addElements(uncleSam, uncleTom, aunSara).sort();
+        List<Element> result = new QuickSortCollection<Element>().
+                addElements(
+                        new Element("Uncle", "Sam", 30),
+                        new Element("Uncle", "Tom", 20),
+                        new Element("Aunt", "Ada", 10)
+                ).
+                sort();
 
-        assertThat(result).contains(aunSara,uncleTom,uncleSam);
+        assertThat(result).contains(aunSara, uncleTom, uncleSam);
     }
 }
