@@ -4,8 +4,6 @@ import org.ecos.logic.quicksort.exceptions.BinaryCollectionNullPointerException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 
 public class BinaryElement<T extends Comparable<T>> {
     T element;
@@ -38,48 +36,21 @@ public class BinaryElement<T extends Comparable<T>> {
         }
     }
 
-    private void goThroughElementsDependingOnOrderBasedBy(
-            Function<BinaryElement<T>, Boolean> firstElementCondition,
-            Function<BinaryElement<T>, List<T>> goToKLastNode,
-            Function<BinaryElement<T>, List<T>> goToRestNodes
-    ) {
-        if (firstElementCondition.apply(this)) {
-            goToKLastNode.apply(this);
-        } else {
-            goToRestNodes.apply(this);
-        }
-    }
-
-    private List<T> commonGoThroughBehaviour(BinaryElement<T> orderA, BinaryElement<T> orderB) {
-        AtomicReference<List<T>> finalResult = new AtomicReference<>(new ArrayList<>());
-        goThroughElementsDependingOnOrderBasedBy(
-                element -> (orderA == null),
-                (element) -> {
-                    finalResult.get().add(element.element);
-                    if (orderB != null) {
-                        finalResult.get().addAll(orderB.goThroughElementsInOrder());
-                    }
-                    return finalResult.get();
-
-                },
-                (element) -> {
-                    finalResult.set(new ArrayList<>(orderA.goThroughElementsInOrder()));
-                    finalResult.get().add(this.element);
-                    if (orderB != null) {
-                        finalResult.get().addAll(orderB.goThroughElementsInOrder());
-                    }
-
-                    return finalResult.get();
-                });
-        return finalResult.get();
-    }
-
     public List<T> goThroughElementsInOrder() {
-        return commonGoThroughBehaviour(this.left, this.right);
+        List<T> result = new ArrayList<>();
+        if (this.left == null) {
+            result.add(element);
+            if (this.right != null) {
+                result.addAll(this.right.goThroughElementsInOrder());
+            }
+            return result;
+        } else {
+            result = new ArrayList<>(this.left.goThroughElementsInOrder());
+            result.add(this.element);
+            if (this.right != null) {
+                result.addAll(this.right.goThroughElementsInOrder());
+            }
+        }
+        return result;
     }
-
-    public List<T> goThroughElementsInReverseOrder() {
-        return commonGoThroughBehaviour(this.right, this.left);
-    }
-
 }
