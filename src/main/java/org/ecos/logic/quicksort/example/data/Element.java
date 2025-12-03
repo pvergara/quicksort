@@ -14,6 +14,15 @@ public class Element implements Comparable<Element> {
     }
 
     @Override
+    public String toString() {
+        return "Element{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
     public int compareTo(Element other) {
         return Integer.compare(this.age, other.age);
     }
