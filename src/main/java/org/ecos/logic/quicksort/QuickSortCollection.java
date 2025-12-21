@@ -13,13 +13,17 @@ public class QuickSortCollection<T extends Comparable<T>> {
         this.binaryElement = new BinaryElement<>();
     }
 
-    public List<T> sort() {
-        return this.binaryElement.goThroughElementsInOrder();
-    }
-
     @SafeVarargs
     public final QuickSortCollection<T> addElements(T... elements) throws BinaryCollectionNullPointerException {
         this.binaryElement.addAll(Arrays.stream(elements).toList());
         return this;
+    }
+
+    public List<T> sort() {
+        return this.binaryElement.inOrderTraversal();
+    }
+
+    public List<T> reverseSort() {
+        return this.binaryElement.reverseOrderTraversal();
     }
 }

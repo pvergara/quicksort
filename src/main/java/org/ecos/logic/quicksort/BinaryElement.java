@@ -5,11 +5,18 @@ import org.ecos.logic.quicksort.exceptions.BinaryCollectionNullPointerException;
 import java.util.ArrayList;
 import java.util.List;
 
+// ... existing code ...
 public class BinaryElement<T extends Comparable<T>> {
-    T element;
-    BinaryElement<T> left;
-    BinaryElement<T> right;
+    private T value;
+    private BinaryElement<T> left;
+    private BinaryElement<T> right;
 
+    public BinaryElement() {
+    }
+
+    private BinaryElement(T value) {
+        this.value = value;
+    }
 
     public void addAll(List<T> list) throws BinaryCollectionNullPointerException {
         for (T element : list) {
@@ -21,36 +28,46 @@ public class BinaryElement<T extends Comparable<T>> {
         if (element == null) {
             throw new BinaryCollectionNullPointerException();
         }
-        if (this.element == null) {
-            this.element = element;
-        } else if (this.element.compareTo(element) > 0) {
+        if (this.value == null) {
+            this.value = element;
+            return;
+        }
+
+        if (this.value.compareTo(element) > 0) {
             if (this.left == null) {
-                this.left = new BinaryElement<>();
+                this.left = new BinaryElement<>(element);
+            } else {
+                this.left.add(element);
             }
-            this.left.add(element);
         } else {
             if (this.right == null) {
-                this.right = new BinaryElement<>();
+                this.right = new BinaryElement<>(element);
+            } else {
+                this.right.add(element);
             }
-            this.right.add(element);
         }
     }
 
-    public List<T> goThroughElementsInOrder() {
+    public List<T> inOrderTraversal() {
         List<T> result = new ArrayList<>();
-        if (this.left == null) {
-            result.add(element);
-            if (this.right != null) {
-                result.addAll(this.right.goThroughElementsInOrder());
-            }
-            return result;
-        } else {
-            result = new ArrayList<>(this.left.goThroughElementsInOrder());
-            result.add(this.element);
-            if (this.right != null) {
-                result.addAll(this.right.goThroughElementsInOrder());
-            }
-        }
+        traverse(this, result, false);
         return result;
+    }
+
+    public List<T> reverseOrderTraversal() {
+        List<T> result = new ArrayList<>();
+        traverse(this, result, true);
+        return result;
+    }
+
+    private void traverse(BinaryElement<T> node, List<T> result, boolean reverse) {
+        if (node == null || node.value == null) return;
+
+        BinaryElement<T> first = reverse ? node.right : node.left;
+        BinaryElement<T> second = reverse ? node.left : node.right;
+
+        traverse(first, result, reverse);
+        result.add(node.value);
+        traverse(second, result, reverse);
     }
 }
