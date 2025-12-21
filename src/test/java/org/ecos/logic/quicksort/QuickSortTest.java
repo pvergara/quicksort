@@ -60,9 +60,9 @@ public class QuickSortTest {
         System.out.println(result);
 
         assertThat(List.of(
-                uncleSam,
+                aunSara,
                 uncleTom,
-                aunSara
+                uncleSam
                 )).isEqualTo(result);
     }
 }
